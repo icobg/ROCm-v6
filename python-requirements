@@ -1,0 +1,17 @@
+python3-build
+python3-packaging
+python3-pep517
+python3-toml
+python3-tomli
+python3-wheel
+msgpack
+joblib
+Tensile
+jsonschema
+attrs
+jsonschema-specifications
+referencing
+rpds-py
+PyYAML
+barectf
+lxml
