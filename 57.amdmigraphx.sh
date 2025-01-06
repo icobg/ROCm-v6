@@ -1,7 +1,5 @@
 #!/bin/bash
 
-read -p "Unable to be compiled"
-exit
 set -e
 
 cd $ROCM_REL_DIR
@@ -23,7 +21,7 @@ BUILD=1
 
 pushd .
 
-CXX=$ROCM_INSTALL_DIR/llvm/bin/clang++ cmake \
+LDFLAGS=-lstdc++ cmake \
     -D CMAKE_CXX_COMPILER=${ROCM_INSTALL_DIR}/llvm/bin/amdclang \
     -D CMAKE_C_COMPILER=${ROCM_INSTALL_DIR}/llvm/bin/amdclang \
     -D CMAKE_BUILD_TYPE=Release \
@@ -39,18 +37,13 @@ CXX=$ROCM_INSTALL_DIR/llvm/bin/clang++ cmake \
     -D GPU_TARGETS="gfx900;gfx906:xnack-;gfx908:xnack-;gfx90a;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1200;gfx1201" \
     $ROCM_REL_DIR/AMDMIGraphX-$LDIR
 
+sed -i 's|-Wl,-rpath-link|-Wl,-allow-shlib-undefined,-rpath-link|g' src/driver/CMakeFiles/driver.dir/link.txt
+sed -i 's|-Wl,-rpath-link|-Wl,-allow-shlib-undefined,-rpath-link|g' src/targets/gpu/driver/CMakeFiles/gpu-driver.dir/link.txt
+sed -i 's|-Wl,-rpath-link|-Wl,-allow-shlib-undefined,-rpath-link|g' src/targets/gpu/hiprtc/CMakeFiles/migraphx-hiprtc-driver.dir/link.txt
+
 ulimit -n 4096
 make $NUMJOBS
 make DESTDIR=$DEST install
-
-#exit
-#"${NINJA:=ninja}" $NUMJOBS || exit 1
-#DESTDIR=$DEST "$NINJA" install/strip || exit 1
-
-#    -G Ninja \
-
-#    -D msgpack_DIR=/usr/lib64/cmake/msgpack-c \
-#    -D msgpackc-cxx_DIR=/usr/lib64/cmake/msgpack-cxx \
 
 mkdir -p $DEST/install
 cat >> $DEST/install/slack-desc << 'END'
