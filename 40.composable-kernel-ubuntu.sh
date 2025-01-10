@@ -25,9 +25,9 @@ ar x $ROCM_REL_DIR/composablekernel-dev_1.1.0.$ROCM_VERSION-$ROCM_MAGIC~24.04_am
 tar xf data.tar.xz
 rm *z debian-binary
 mv opt/rocm-$PKGVER opt/rocm
+mkdir -p install
 
-mkdir -p $DEST/install
-cat >> $DEST/install/slack-desc << 'END'
+cat >> install/slack-desc << 'END'
 # HOW TO EDIT THIS FILE:
 # The "handy ruler" below makes it easier to edit a package description.
 # Line up the first '|' above the ':' following the base package name, and
