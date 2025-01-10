@@ -37,14 +37,14 @@ most of them because they required AMD GPU driver which currently
 could be build successful only on kernel 5.x
 
 These packages from "ROCm core packages" are:
-
+```
 rdc
 aomp
 rocAL
 rocDecode
 rocJPEG
 rpp
-
+```
 
 Have fun and cheers,
 Condor
