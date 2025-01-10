@@ -30,5 +30,21 @@ Follow the build order.
 >[!NOTE]
 > Don't use virtual environment when compile the rocBLAS
 
+## Not Build
+
+The few packages from ROCm does not compiled for some reasons,
+most of them because they required AMD GPU driver which currently
+could be build successful only on kernel 5.x
+
+These packages from "ROCm core packages" are:
+
+rdc
+aomp
+rocAL
+rocDecode
+rocJPEG
+rpp
+
+
 Have fun and cheers,
 Condor
