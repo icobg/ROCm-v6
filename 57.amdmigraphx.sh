@@ -1,21 +1,21 @@
 #!/bin/bash
 
 set -e
-
+PRGNAM=AMDMIGraphX
 cd $ROCM_REL_DIR
-wget https://github.com/ROCm/AMDMIGraphX/archive/rocm-$PKGVER.tar.gz
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
 wget https://www.ixip.net/rocm/migraphx-6.3-msgpack.patch
-tar xf AMDMIGraphX-$LDIR.tar.gz
-cd AMDMIGraphX-$LDIR
+tar xf $PRGNAM-$LDIR.tar.gz
+cd $PRGNAM-$LDIR
 
 patch -Np1 -i $ROCM_REL_DIR/migraphx-6.3-msgpack.patch
 
-rm -rf $ROCM_BUILD_DIR/amdmigraphx
-mkdir -p $ROCM_BUILD_DIR/amdmigraphx
-cd $ROCM_BUILD_DIR/amdmigraphx
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 
-DEST=$OUTPUT/package-amdmigrapx
-PRGNAM=AMDMIGraphX
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 
@@ -31,11 +31,12 @@ LDFLAGS=-lstdc++ cmake \
     -D MIGRAPHX_ENABLE_GPU=ON \
     -D MIGRAPHX_USE_COMPOSABLEKERNEL=OFF \
     -D BUILD_TESTING=OFF \
+    -D ROCM_ENABLE_CLANG_TIDY=OFF \
     -D MIGRAPHX_ENABLE_MLIR=ON \
     -D MIGRAPHX_ENABLE_CPU=OFF \
     -D AMDGPU_TARGETS="gfx900;gfx906:xnack-;gfx908:xnack-;gfx90a;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1200;gfx1201" \
     -D GPU_TARGETS="gfx900;gfx906:xnack-;gfx908:xnack-;gfx90a;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1200;gfx1201" \
-    $ROCM_REL_DIR/AMDMIGraphX-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 sed -i 's|-Wl,-rpath-link|-Wl,-allow-shlib-undefined,-rpath-link|g' src/driver/CMakeFiles/driver.dir/link.txt
 sed -i 's|-Wl,-rpath-link|-Wl,-allow-shlib-undefined,-rpath-link|g' src/targets/gpu/driver/CMakeFiles/gpu-driver.dir/link.txt
@@ -72,4 +73,3 @@ cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
