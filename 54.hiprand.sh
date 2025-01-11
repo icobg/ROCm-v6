@@ -1,19 +1,19 @@
 #!/bin/bash
 
 set -e
-
+PRGNAM=hipRAND
 cd $ROCM_REL_DIR
-wget https://github.com/ROCmSoftwarePlatform/hipRAND/archive/rocm-$PKGVER.tar.gz
-tar xf hipRAND-$LDIR.tar.gz
-cd $ROCM_REL_DIR/hipRAND-$LDIR
+wget https://github.com/ROCmSoftwarePlatform/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+cd $ROCM_REL_DIR/$PRGNAM-$LDIR
 sed -i 's|/hip/bin|/bin|g' toolchain-linux.cmake
 
-rm -rf $ROCM_BUILD_DIR/hipRAND
-mkdir -p $ROCM_BUILD_DIR/hipRAND
-cd $ROCM_BUILD_DIR/hipRAND
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 
-DEST=$OUTPUT/package-hipRAND
-PRGNAM=hipRAND
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -28,7 +28,7 @@ cmake \
     -D CMAKE_CXX_FLAGS="${CXXFLAGS} -fcf-protection=none" \
     -D CMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
     -D BUILD_FORTRAN_WRAPPER=ON \
-    $ROCM_REL_DIR/hipRAND-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
