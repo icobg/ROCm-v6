@@ -3,20 +3,21 @@
 read -p "Taking few hours, don't use virtual environment"
 set -e
 
+PRGNAM=rocBLAS
 cd $ROCM_REL_DIR
-wget https://github.com/ROCmSoftwarePlatform/rocBLAS/archive/rocm-$PKGVER.tar.gz
+wget https://github.com/ROCmSoftwarePlatform/$PRGNAM/archive/rocm-$PKGVER.tar.gz
 wget https://github.com/ROCmSoftwarePlatform/Tensile/archive/rocm-$PKGVER.tar.gz
 #wget https://www.ixip.net/rocm/rocblas-6.3-disable-verify.patch
-tar xf rocBLAS-$LDIR.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
 tar xf Tensile-$LDIR.tar.gz
 
 tensile_dir=$(basename Tensile-$LDIR.tar.gz)
-rm -rf $ROCM_BUILD_DIR/rocblas
-mkdir -p $ROCM_BUILD_DIR/rocblas
-cd $ROCM_BUILD_DIR/rocblas
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 
-DEST=$OUTPUT/package-rocblas
-PRGNAM=rocBLAS
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 
@@ -26,7 +27,6 @@ pushd .
 
 export HIPCC_COMPILE_FLAGS_APPEND="-parallel-jobs=$(nproc)"
 export HIPCC_LINK_FLAGS_APPEND="-parallel-jobs=$(nproc)"
-
 
 cmake \
     -Wno-dev \
@@ -48,7 +48,7 @@ cmake \
     -D TENSILE_GPU_ARCHS="gfx803;gfx900;gfx906;gfx908;gfx90a;gfx1010;gfx1011;gfx1012;gfx1030;gfx1031;gfx1032;gfx1034;gfx1035;" \
     -D Tensile_ARCHITECTURE="gfx900;gfx906:xnack-;gfx908:xnack-;gfx90a;gfx1010;gfx1012;gfx1030;gfx1151;" \
     -G "Unix Makefiles" \
-    $ROCM_REL_DIR/rocBLAS-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 #echo "Disable bug into Tensile verifying process"
 #patch -Np1 -i $ROCM_REL_DIR/rocblas-6.3-disable-verify.patch
