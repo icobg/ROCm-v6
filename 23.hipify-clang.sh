@@ -1,16 +1,16 @@
 #!/bin/bash
 
 set -e
-
+PRGNAM=hipify-clang
 cd $ROCM_REL_DIR
 wget https://github.com/ROCm-Developer-Tools/HIPIFY/archive/rocm-$PKGVER.tar.gz
 tar xf HIPIFY-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/hipify-clang
-mkdir -p $ROCM_BUILD_DIR/hipify-clang
-cd $ROCM_BUILD_DIR/hipify-clang
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 
-DEST=$OUTPUT/package-hipify-clang
-PRGNAM=hipify-clang
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -57,4 +57,3 @@ cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
