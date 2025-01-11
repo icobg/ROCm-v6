@@ -2,21 +2,21 @@
 
 set -e
 
-rm -rf $ROCM_BUILD_DIR/rocm-hipcc
-mkdir -p $ROCM_BUILD_DIR/rocm-hipcc
-cd $ROCM_BUILD_DIR/rocm-hipcc
+PRGNAM=rocm-hipcc
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 
 LLVMNAM=llvm-project
-DEST=$OUTPUT/package-hipcc
-PRGNAM=rocm-hipcc
+DEST=$OUTPUT/package-$PRGNAM
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 
 rm -rf $DEST
 
 echo "Building hipcc"
-mkdir -p $ROCM_BUILD_DIR/rocm-hipcc
-cd $ROCM_BUILD_DIR/rocm-hipcc
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 cmake \
     -Wno-dev \
     -D CMAKE_BUILD_TYPE=Release \
