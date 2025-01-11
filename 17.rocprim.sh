@@ -2,16 +2,17 @@
 
 set -e
 
-cd $ROCM_REL_DIR
-wget https://github.com/ROCmSoftwarePlatform/rocPRIM/archive/rocm-$PKGVER.tar.gz
-tar xf rocPRIM-$LDIR.tar.gz
-
-rm -rf $ROCM_BUILD_DIR/rocprim
-mkdir -p $ROCM_BUILD_DIR/rocprim
-cd $ROCM_BUILD_DIR/rocprim
-
-DEST=$OUTPUT/package-rocprim
 PRGNAM=rocPRIM
+cd $ROCM_REL_DIR
+wget https://github.com/ROCmSoftwarePlatform/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -24,7 +25,7 @@ cmake \
     -D CMAKE_C_COMPILER=${ROCM_INSTALL_DIR}/bin/hipcc \
     -D CMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
     -D CMAKE_BUILD_TYPE=Release \
-    $ROCM_REL_DIR/rocPRIM-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
