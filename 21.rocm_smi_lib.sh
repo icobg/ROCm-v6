@@ -1,16 +1,16 @@
 #!/bin/bash
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCm/rocm_smi_lib/archive/rocm-$PKGVER.tar.gz
-tar xf rocm_smi_lib-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/rocm_smi_lib
-mkdir -p $ROCM_BUILD_DIR/rocm_smi_lib
-cd $ROCM_BUILD_DIR/rocm_smi_lib
-
-DEST=$OUTPUT/package-rocsmilib
 PRGNAM=rocm_smi_lib
+cd $ROCM_REL_DIR
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -21,7 +21,7 @@ cmake \
     -Wno-dev \
     -D CMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
     -D CMAKE_BUILD_TYPE=Release \
-    $ROCM_REL_DIR/rocm_smi_lib-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
@@ -53,4 +53,3 @@ cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
