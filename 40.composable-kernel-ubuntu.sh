@@ -4,8 +4,8 @@ set -e
 
 read -p "Repack of Ubuntu package and save 2 days for compilation"
 
-DEST=$OUTPUT/package-composable_kernel
 PRGNAM=composable_kernel
+DEST=$OUTPUT/package-$PRGNAM
 BUILD=1
 
 cd $ROCM_REL_DIR
@@ -14,9 +14,9 @@ cd $ROCM_REL_DIR
 wget https://repo.radeon.com/rocm/apt/${PKGVER}/pool/main/c/composablekernel-ckprofiler/composablekernel-ckprofiler_1.1.0.$ROCM_VERSION-$ROCM_MAGIC~24.04_amd64.deb
 wget https://repo.radeon.com/rocm/apt/${PKGVER}/pool/main/c/composablekernel-dev/composablekernel-dev_1.1.0.$ROCM_VERSION-$ROCM_MAGIC~24.04_amd64.deb
 
-rm -rf $ROCM_BUILD_DIR/composable_kernel
-mkdir -p $ROCM_BUILD_DIR/composable_kernel
-cd $ROCM_BUILD_DIR/composable_kernel
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 mkdir tmp && cd tmp
 ar x $ROCM_REL_DIR/composablekernel-ckprofiler_1.1.0.$ROCM_VERSION-$ROCM_MAGIC~24.04_amd64.deb
 tar xf data.tar.xz
