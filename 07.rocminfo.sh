@@ -1,15 +1,15 @@
 #!/bin/bash
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCm/rocminfo/archive/rocm-$PKGVER.tar.gz
-tar xf rocminfo-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/rocminfo
-mkdir -p $ROCM_BUILD_DIR/rocminfo
-cd $ROCM_BUILD_DIR/rocminfo
-DEST=$OUTPUT/package-rocminfo
 PRGNAM=rocminfo
+cd $ROCM_REL_DIR
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -23,7 +23,7 @@ cmake \
     -D ROCRTST_BLD_TYPE=Release \
     -D CMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
     -D CMAKE_INSTALL_LIBDIR=lib \
-    $ROCM_REL_DIR/rocminfo-$LDIR/
+    $ROCM_REL_DIR/$PRGNAM-$LDIR/
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
@@ -55,4 +55,3 @@ cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
