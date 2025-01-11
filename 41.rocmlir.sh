@@ -1,18 +1,18 @@
 #!/bin/bash
 
 set -e
-
+PRGNAM=rocMLIR
 cd $ROCM_REL_DIR
-wget https://github.com/ROCm/rocMLIR/archive/rocm-$PKGVER.tar.gz
-tar xf rocMLIR-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/rocmlir
-mkdir -p $ROCM_BUILD_DIR/rocmlir
-cd $ROCM_BUILD_DIR/rocmlir
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 
 pushd .
 
-DEST=$OUTPUT/package-rocmlir
-PRGNAM=rocMLIR
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -30,7 +30,7 @@ cmake \
     -D CMAKE_C_COMPILER=${ROCM_INSTALL_DIR}/llvm/bin/clang \
     -D CMAKE_CXX_COMPILER=${ROCM_INSTALL_DIR}/llvm/bin/clang++ \
     -D BUILD_FAT_LIBROCKCOMPILER=ON \
-    $ROCM_REL_DIR/rocMLIR-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
@@ -62,4 +62,3 @@ cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
