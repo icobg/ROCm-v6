@@ -1,24 +1,24 @@
 #!/bin/bash
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCm/roctracer/archive/rocm-$PKGVER.tar.gz
-tar xf roctracer-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/roctracer
-mkdir -p $ROCM_BUILD_DIR/roctracer
-cd $ROCM_BUILD_DIR/roctracer
-
-DEST=$OUTPUT/package-roctracer
 PRGNAM=roctracer
+cd $ROCM_REL_DIR
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
 
 pushd .
 
-PACKAGE_ROOT=$ROCM_INSTALL_DIR/roctracer
-PACKAGE_PREFIX=$ROCM_INSTALL_DIR/roctracer
+PACKAGE_ROOT=$ROCM_INSTALL_DIR/$PRGNAM
+PACKAGE_PREFIX=$ROCM_INSTALL_DIR/$PRGNAM
 LD_RUNPATH_FLAG="-Wl,--enable-new-dtags -Wl,--rpath,$ROCM_INSTALL_DIR/lib:$ROCM_INSTALL_DIR/lib64 -fPIC"
 HIP_API_STRING=1
 export HIP_PATH=$ROCM_INSTALL_DIR
@@ -32,7 +32,7 @@ cmake \
     -D CMAKE_CXX_FLAGS="${CXXFLAGS} -fcf-protection=none -fPIC" \
     -D CMAKE_C_FLAGS="${C_FLAGS} -fPIC" \
     -D CMAKE_SHARED_LINKER_FLAGS="$LD_RUNPATH_FLAG" \
-    $ROCM_REL_DIR/roctracer-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS || exit 1
 DESTDIR=$DEST cmake --install . --strip || exit 1
