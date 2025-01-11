@@ -1,16 +1,16 @@
 #!/bin/bash
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCm/rocprofiler/archive/rocm-$PKGVER.tar.gz
-tar xf rocprofiler-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/rocprofiler
-mkdir -p $ROCM_BUILD_DIR/rocprofiler
-cd $ROCM_BUILD_DIR/rocprofiler
-
-DEST=$OUTPUT/package-rocprofiler
 PRGNAM=rocprofiler
+cd $ROCM_REL_DIR
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -32,7 +32,7 @@ cmake \
     -D ROCPROFILER_BUILD_PLUGIN_PERFETTO=OFF \
     -D CMAKE_CXX_FLAGS="${CXXFLAGS} -fcf-protection=none -fPIC" \
     -D PROF_API_HEADER_PATH=$ROCM_REL_DIR/roctracer-$LDIR/inc/ext \
-    $ROCM_REL_DIR/rocprofiler-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
@@ -64,4 +64,3 @@ cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
