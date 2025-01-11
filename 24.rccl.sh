@@ -1,22 +1,21 @@
 #!/bin/bash
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCmSoftwarePlatform/rccl/archive/rocm-$PKGVER.tar.gz
-tar xf rccl-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/rccl
-mkdir -p $ROCM_BUILD_DIR/rccl
-cd $ROCM_BUILD_DIR/rccl
-
-DEST=$OUTPUT/package-rccl
 PRGNAM=rccl
+cd $ROCM_REL_DIR
+wget https://github.com/ROCmSoftwarePlatform/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
 
 pushd .
-
 
 export HIPCC_COMPILE_FLAGS_APPEND="-parallel-jobs=$(nproc)"
 export HIPCC_LINK_FLAGS_APPEND="-parallel-jobs=$(nproc)"
@@ -31,7 +30,7 @@ cmake \
     -D HIP_CLANG_INCLUDE_PATH=${ROCM_INSTALL_DIR}/llvm/include \
     -D ENABLE_MSCCLPP=OFF \
     -D ENABLE_MSCCL_KERNEL=ON \
-    $ROCM_REL_DIR/rccl-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
