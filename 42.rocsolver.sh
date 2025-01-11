@@ -3,16 +3,16 @@
 read -p "Require 2 hours"
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCmSoftwarePlatform/rocSOLVER/archive/rocm-$PKGVER.tar.gz
-tar xf rocSOLVER-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/rocsolver
-mkdir -p $ROCM_BUILD_DIR/rocsolver
-cd $ROCM_BUILD_DIR/rocsolver
-
-DEST=$OUTPUT/package-rocsolver
 PRGNAM=rocSOLVER
+cd $ROCM_REL_DIR
+wget https://github.com/ROCmSoftwarePlatform/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -29,7 +29,7 @@ cmake \
     -D CMAKE_CXX_FLAGS="${CXXFLAGS} -fcf-protection=none" \
     -D CMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
     -D ROCSOLVER_EMBED_FMT=ON \
-    $ROCM_REL_DIR/rocSOLVER-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
