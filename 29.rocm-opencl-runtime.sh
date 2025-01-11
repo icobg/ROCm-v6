@@ -1,16 +1,16 @@
 #!/bin/bash
 
 set -e
-
+PRGNAM=rocm-opencl-runtime
 cd $ROCM_REL_DIR
 wget https://github.com/ROCm/clr/archive/rocm-$PKGVER.tar.gz
 tar xf clr-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/rocm-opencl-runtime
-mkdir -p $ROCM_BUILD_DIR/rocm-opencl-runtime
-cd $ROCM_BUILD_DIR/rocm-opencl-runtime
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 
-DEST=$OUTPUT/package-rocm-opencl-runtime
-PRGNAM=rocm-opencl-runtime
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -56,4 +56,3 @@ echo '/opt/rocm/lib/libamdocl64.so' > etc/OpenCL/vendors/amdocl64.icd
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
