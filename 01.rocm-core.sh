@@ -1,15 +1,15 @@
 #!/bin/bash
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCm/rocm-core/archive/rocm-$PKGVER.tar.gz
-tar xf rocm-core-rocm-$PKGVER.tar.gz
-rm -rf $ROCM_BUILD_DIR/rocm-core
-mkdir -p $ROCM_BUILD_DIR/rocm-core
-cd $ROCM_BUILD_DIR/rocm-core
-DEST=$OUTPUT/package-rocm-core
 PRGNAM=rocm-core
+cd $ROCM_REL_DIR
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+DEST=$OUTPUT/package-$PRGNAM
+
 BUILD=1
 rm -rf $DEST
 
@@ -69,4 +69,3 @@ END
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
