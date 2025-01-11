@@ -1,21 +1,21 @@
 #!/bin/bash
 
 set -e
-
+PRGNAM=rocprofiler-register
 cd $ROCM_REL_DIR
-wget https://github.com/ROCm/rocprofiler-register/archive/rocm-$PKGVER.tar.gz
-tar xf rocprofiler-register-$LDIR.tar.gz
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
 # Remove cpack packaging
-sed -i '116d' "$ROCM_REL_DIR/rocprofiler-register-$LDIR/CMakeLists.txt"
+sed -i '116d' "$ROCM_REL_DIR/$PRGNAM-$LDIR/CMakeLists.txt"
 # find_package() calls on global scope
 sed -i 's/add_subdirectory(external)/find_package(fmt REQUIRED)\nfind_package(glog REQUIRED)/' \
-    "$ROCM_REL_DIR/rocprofiler-register-$LDIR/CMakeLists.txt"
+    "$ROCM_REL_DIR/$PRGNAM-$LDIR/CMakeLists.txt"
 
-rm -rf $ROCM_BUILD_DIR/rocprofiler-register
-mkdir -p $ROCM_BUILD_DIR/rocprofiler-register
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
 
-DEST=$OUTPUT/package-rocprofiler-register
-PRGNAM=rocprofiler-register
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -23,9 +23,9 @@ rm -rf $DEST
 pushd .
 
 
-cd $ROCM_BUILD_DIR/rocprofiler-register
-#git clone https://github.com/ROCm/rocprofiler-register.git
-#cd rocprofiler-register
+cd $ROCM_BUILD_DIR/$PRGNAM
+#git clone https://github.com/ROCm/$PRGNAM.git
+#cd $PRGNAM
 #git checkout amd-staging
 #git pull --rebase
 ##git checkout "$CHECKOUT"
@@ -43,7 +43,7 @@ cmake \
     -DBUILD_TESTING=OFF \
     -D ROCPROFILER_REGISTER_BUILD_GLOG=OFF \
     -D ROCPROFILER_REGISTER_BUILD_FMT=OFF \
-    $ROCM_REL_DIR/rocprofiler-register-$LDIR/
+    $ROCM_REL_DIR/$PRGNAM-$LDIR/
 
 cmake --build . --target all --parallel 8
 DESTDIR=$DEST cmake --install . --strip
