@@ -14,20 +14,21 @@ printf "\non bug 2+ weeks\n"
 
 read -p "Press any key to continue"
 
-cd $ROCM_REL_DIR
-wget https://github.com/ROCm/composable_kernel/archive/rocm-$PKGVER.tar.gz
-wget https://www.ixip.net/rocm/composable_kernel-fix-dev-build.patch
-tar xf composable_kernel-$LDIR.tar.gz
-cd composable_kernel-$LDIR
-patch -Np2 -i $ROCM_REL_DIR/composable_kernel-fix-dev-build.patch
-sed -i '/add_subdirectory(test)/d' "$ROCM_REL_DIR/composable_kernel-$LDIR/CMakeLists.txt"
-
-rm -rf $ROCM_BUILD_DIR/composable_kernel
-mkdir -p $ROCM_BUILD_DIR/composable_kernel
-cd $ROCM_BUILD_DIR/composable_kernel
-
-DEST=$OUTPUT/package-composable_kernel
 PRGNAM=composable_kernel
+cd $ROCM_REL_DIR
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+wget https://www.ixip.net/rocm/composable_kernel-fix-dev-build.patch
+tar xf $PRGNAM-$LDIR.tar.gz
+cd c$PRGNAM-$LDIR
+patch -Np2 -i $ROCM_REL_DIR/composable_kernel-fix-dev-build.patch
+sed -i '/add_subdirectory(test)/d' "$ROCM_REL_DIR/$PRGNAM-$LDIR/CMakeLists.txt"
+
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) - 2 ) "}
 BUILD=1
 rm -rf $DEST
@@ -65,23 +66,20 @@ cmake \
     -D BUILD_DEV=OFF \
     -D BUILD_TESTING=OFF \
     -D USE_OPT_GFX11=ON \
-    $ROCM_REL_DIR/composable_kernel-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 #    -D CMAKE_TOOLCHAIN_FILE=$ROCM_REL_DIR/composable_kernel-$LDIR/depend/cget/cget.cmake \
-
 #    -D INSTANCES_ONLY=ON \
-
 #    -D DTYPES="fp32;fp16" \
 
 #"${NINJA:=ninja}" $NUMJOBS || exit 1
 #DESTDIR=$DEST "$NINJA" install || exit 1
 
-#make -j $NUMJOBS
+make -j $NUMJOBS
 make -j $NUMJOBS ckProfiler
-exit
 make $NUMJOBS install DESTDIR=$DEST
-#mkdir -p $DEST/bin
-#cp bin/ckProfiler $DEST/bin
+mkdir -p $DEST/bin
+cp bin/ckProfiler $DEST/bin
 
 mkdir -p $DEST/install
 cat >> $DEST/install/slack-desc << 'END'
