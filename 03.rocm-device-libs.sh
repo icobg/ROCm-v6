@@ -4,15 +4,16 @@ set -e
 
 echo "Building ROCm Device Libraries"
 
-rm -rf $ROCM_BUILD_DIR/rocm-device-libs
-mkdir -p $ROCM_BUILD_DIR/rocm-device-libs
-cd $ROCM_BUILD_DIR/rocm-device-libs
+PRGNAM=rocm-device-libs
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 
 LLVMNAM=llvm-project
-PRGNAM=rocm-device-libs
+
 BUILD=1
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
-DEST=$OUTPUT/package-device-libs
+DEST=$OUTPUT/package-$PRGNAM
 rm -rf $DEST
 
 pushd .
