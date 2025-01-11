@@ -1,16 +1,16 @@
 #!/bin/bash
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCm/ROCgdb/archive/rocm-$PKGVER.tar.gz
-tar xf ROCgdb-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/rocdbga
-mkdir -p $ROCM_BUILD_DIR/rocgdba
-cd $ROCM_BUILD_DIR/rocgdba
-
-DEST=$OUTPUT/package-rocdbg
 PRGNAM=ROCgdb
+cd $ROCM_REL_DIR
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -18,7 +18,7 @@ rm -rf $DEST
 pushd .
 
 export PKG_CONFIG_PATH="/opt/rocm/share/pkgconfig:$PKG_CONFIG_PATH"
-$ROCM_REL_DIR/ROCgdb-$LDIR/configure \
+$ROCM_REL_DIR/$PRGNAM-$LDIR/configure \
         --prefix=/opt/rocm \
         --program-prefix=roc \
         --disable-binutils \
@@ -68,4 +68,3 @@ cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
