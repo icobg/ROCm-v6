@@ -1,15 +1,15 @@
 #!/bin/bash
 
 set -e
-
+PRGNAM=hsa-rocr
 cd $ROCM_REL_DIR
 wget https://github.com/ROCm/ROCR-Runtime/archive/rocm-$PKGVER.tar.gz
 tar xf ROCR-Runtime-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/hsa-rocr
-mkdir -p $ROCM_BUILD_DIR/hsa-rocr
-cd $ROCM_BUILD_DIR/hsa-rocr
-DEST=$OUTPUT/package-hsa-rocr
-PRGNAM=hsa-rocr
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -60,4 +60,3 @@ cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
