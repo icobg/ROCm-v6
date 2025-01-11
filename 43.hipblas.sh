@@ -1,16 +1,16 @@
 #!/bin/bash
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCm/hipBLAS/archive/rocm-$PKGVER.tar.gz
-tar xf hipBLAS-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/hipblas
-mkdir -p $ROCM_BUILD_DIR/hipblas
-cd $ROCM_BUILD_DIR/hipblas
-
-DEST=$OUTPUT/package-hipblas
 PRGNAM=hipBLAS
+cd $ROCM_REL_DIR
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -23,12 +23,10 @@ CXX=$ROCM_INSTALL_DIR/bin/amdclang cmake \
     -D CMAKE_C_COMPILER=${ROCM_INSTALL_DIR}/llvm/bin/amdclang \
     -D CMAKE_CXX_FLAGS="${CXXFLAGS} -fcf-protection=none" \
     -DCMAKE_BUILD_TYPE=Release \
-    $ROCM_REL_DIR/hipBLAS-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
-
-#    -D CMAKE_CXX_COMPILER=${ROCM_INSTALL_DIR}/bin/hipcc \
 
 mkdir -p $DEST/install
 cat >> $DEST/install/slack-desc << 'END'
@@ -56,4 +54,3 @@ cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
