@@ -2,16 +2,17 @@
 
 set -e
 
-cd $ROCM_REL_DIR
-wget https://github.com/ROCmSoftwarePlatform/rocRAND/archive/rocm-$PKGVER.tar.gz
-tar xf rocRAND-$LDIR.tar.gz
-
-rm -rf $ROCM_BUILD_DIR/rocrand
-mkdir -p $ROCM_BUILD_DIR/rocrand
-cd $ROCM_BUILD_DIR/rocrand
-
-DEST=$OUTPUT/package-rocrand
 PRGNAM=rocRAND
+cd $ROCM_REL_DIR
+wget https://github.com/ROCmSoftwarePlatform/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAMD-$LDIR.tar.gz
+
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -25,7 +26,7 @@ cmake \
     -DCMAKE_CXX_COMPILER=${ROCM_INSTALL_DIR}/bin/amdclang++ \
     -DCMAKE_CXX_FLAGS="${CXXFLAGS} -fcf-protection=none" \
     -DCMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
-    $ROCM_REL_DIR/rocRAND-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
