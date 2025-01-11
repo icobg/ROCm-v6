@@ -2,21 +2,21 @@
 
 #read -p "Compilation error 6.2.0, not solved yet"
 set -e
-
+PRGNAM=MIOpen
 cd $ROCM_REL_DIR
-wget https://github.com/ROCm/MIOpen/archive/rocm-$PKGVER.tar.gz
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
 
-tar xf MIOpen-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/miopen
-mkdir -p $ROCM_BUILD_DIR/miopen
-cd $ROCM_BUILD_DIR/miopen
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 
 pushd .
 
-DEST=$OUTPUT/package-miopen
+DEST=$OUTPUT/package-$PRGNAM
 rm -rf $DEST
 
-PRGNAM=MIOpen
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 
@@ -33,7 +33,7 @@ CXX=$ROCM_INSTALL_DIR/llvm/bin/clang++ cmake \
     -D HALF_INCLUDE_DIR=/usr/include/half \
     -D BUILD_TESTING=NO \
     -D Boost_USE_STATIC_LIBS=NO \
-    $ROCM_REL_DIR/MIOpen-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
