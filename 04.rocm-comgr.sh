@@ -2,21 +2,22 @@
 
 set -e
 
-rm -rf $ROCM_BUILD_DIR/rocm-comgr
-mkdir -p $ROCM_BUILD_DIR/rocm-comgr
-cd $ROCM_BUILD_DIR/rocm-comgr
+PRGNAM=rocm-comgr
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 
 LLVMNAM=llvm-project
-DESTCOMGR=$OUTPUT/package-comgr
-PRGNAM=rocm-comgr
+DESTCOMGR=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 
 rm -rf $DESTCOMGR
 
 echo "Building comgr"
-mkdir -p $ROCM_BUILD_DIR/rocm-comgr
-cd $ROCM_BUILD_DIR/rocm-comgr
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 cmake \
     -Wno-dev \
     -D CMAKE_BUILD_TYPE=Release \
