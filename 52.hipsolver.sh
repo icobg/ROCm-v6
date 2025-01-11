@@ -1,16 +1,16 @@
 #!/bin/bash
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCm/hipSOLVER/archive/rocm-$PKGVER.tar.gz
-tar xf hipSOLVER-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/hipsolver
-mkdir -p $ROCM_BUILD_DIR/hipsolver
-cd $ROCM_BUILD_DIR/hipsolver
-
-DEST=$OUTPUT/package-hipsolver
 PRGNAM=hipSOLVER
+cd $ROCM_REL_DIR
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -23,7 +23,7 @@ CXX=$ROCM_INSTALL_DIR/bin/amdclang cmake \
     -D CMAKE_CXX_FLAGS="${CXXFLAGS} -fcf-protection=none" \
     -D CMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
     -DCMAKE_BUILD_TYPE=Release \
-    $ROCM_REL_DIR/hipSOLVER-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
@@ -54,4 +54,3 @@ cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
