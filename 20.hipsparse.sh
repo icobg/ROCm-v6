@@ -1,16 +1,16 @@
 #!/bin/bash
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCmSoftwarePlatform/hipSPARSE/archive/rocm-$PKGVER.tar.gz
-tar xf hipSPARSE-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/hipsparse
-mkdir -p $ROCM_BUILD_DIR/hipsparse
-cd $ROCM_BUILD_DIR/hipsparse
-
-DEST=$OUTPUT/package-hipsparse
 PRGNAM=hipSPARSE
+cd $ROCM_REL_DIR
+wget https://github.com/ROCmSoftwarePlatform/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -26,7 +26,7 @@ cmake \
     -D BUILD_CUDA=OFF \
     -D HIP_PATH=${ROCM_INSTALL_DIR} \
     -D BUILD_CLIENTS_SAMPLES=NO \
-    $ROCM_REL_DIR/hipSPARSE-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
