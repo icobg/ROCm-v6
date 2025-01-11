@@ -1,17 +1,17 @@
 #!/bin/bash
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCm/rocmvalidationsuite/archive/rocm-$PKGVER.tar.gz
-tar xf ROCmValidationSuite-$LDIR.tar.gz
-
-rm -rf $ROCM_BUILD_DIR/rocmvalidationsuite
-mkdir -p $ROCM_BUILD_DIR/rocmvalidationsuite
-cd $ROCM_BUILD_DIR/rocmvalidationsuite
-
-DEST=$OUTPUT/package-rocmvalidate
 PRGNAM=ROCmValidationSuite
+cd $ROCM_REL_DIR
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 
@@ -31,7 +31,6 @@ cmake \
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
-
 
 mkdir -p $DEST/install
 cat >> $DEST/install/slack-desc << 'END'
