@@ -1,16 +1,16 @@
 #!/bin/bash
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCm/hipfort/archive/rocm-$PKGVER.tar.gz
-tar xf hipfort-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/hipfort
-mkdir -p $ROCM_BUILD_DIR/hipfort
-cd $ROCM_BUILD_DIR/hipfort
-
-DEST=$OUTPUT/package-hipfort
 PRGNAM=hipfort
+cd $ROCM_REL_DIR
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -22,7 +22,7 @@ CXX=$ROCM_INSTALL_DIR/bin/amdclang cmake \
     -D CPACK_PACKAGING_INSTALL_PREFIX=$ROCM_INSTALL_DIR \
     -D HIPFORT_INSTALL_DIR=${ROCM_INSTALL_DIR} \
     -G "Unix Makefiles" \
-    $ROCM_REL_DIR/hipfort-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
@@ -54,4 +54,3 @@ cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
