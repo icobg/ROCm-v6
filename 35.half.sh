@@ -1,23 +1,23 @@
 #!/bin/bash
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCm/half/archive/rocm-$PKGVER.tar.gz
-tar xf half-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/half
-mkdir -p $ROCM_BUILD_DIR/half
-cd $ROCM_BUILD_DIR/half
-
-DEST=$OUTPUT/package-half
 PRGNAM=half
+cd $ROCM_REL_DIR
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
 
 pushd .
 
-cmake $ROCM_REL_DIR/half-$LDIR
+cmake $ROCM_REL_DIR/$PRGNAM-$LDIR
 cmake --build . $NUMJOBS || exit 1
 DESTDIR=$DEST cmake --install . --strip || exit 1
 
@@ -48,4 +48,3 @@ cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
