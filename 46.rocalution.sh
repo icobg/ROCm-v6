@@ -1,16 +1,16 @@
 #!/bin/bash
 
 set -e
-
-cd $ROCM_REL_DIR
-wget https://github.com/ROCm/rocALUTION/archive/rocm-$PKGVER.tar.gz
-tar xf rocALUTION-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/rocalution
-mkdir -p $ROCM_BUILD_DIR/rocalution
-cd $ROCM_BUILD_DIR/rocalution
-
-DEST=$OUTPUT/package-rocalution
 PRGNAM=rocALUTION
+cd $ROCM_REL_DIR
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
@@ -23,13 +23,13 @@ export HIPCC_LINK_FLAGS_APPEND="-parallel-jobs=$(nproc)"
 cmake \
     -Wno-dev \
     -D CMAKE_BUILD_TYPE=Release \
-    -D CMAKE_TOOLCHAIN_FILE="$ROCM_REL_DIR/rocALUTION-$LDIR/toolchain-linux.cmake" \
+    -D CMAKE_TOOLCHAIN_FILE="$ROCM_REL_DIR/$PRGNAM-$LDIR/toolchain-linux.cmake" \
     -D CMAKE_CXX_FLAGS="${CXXLFLAGS} -fcf-protection=none" \
     -D CMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
     -D ROCM_PATH=${ROCM_INSTALL_DIR} \
     -D SUPPORT_HIP=ON \
     -D BUILD_SHARED_LIBS=ON \
-    $ROCM_REL_DIR/rocALUTION-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 #    -D SUPPORT_OMP=ON \
 #    -D SUPPORT_MPI=ON \
@@ -62,4 +62,3 @@ cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
