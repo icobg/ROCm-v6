@@ -4,15 +4,16 @@ read -p "Require few hours"
 
 set -e
 
-cd $ROCM_REL_DIR
-wget https://github.com/ROCmSoftwarePlatform/rocFFT/archive/rocm-$PKGVER.tar.gz
-tar xf rocFFT-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/rocfft
-mkdir -p $ROCM_BUILD_DIR/rocfft
-cd $ROCM_BUILD_DIR/rocfft
-
-DEST=$OUTPUT/package-rocfft
 PRGNAM=rocFFT
+cd $ROCM_REL_DIR
+wget https://github.com/ROCmSoftwarePlatform/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) - 1) "}
 BUILD=1
 rm -rf $DEST
@@ -28,7 +29,7 @@ cmake \
     -D CMAKE_CXX_COMPILER=${ROCM_INSTALL_DIR}/bin/hipcc \
     -D CMAKE_CXX_FLAGS="${CXXFLAGS} -fcf-protection=none" \
     -D CMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
-    $ROCM_REL_DIR/rocFFT-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
