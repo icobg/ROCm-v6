@@ -2,21 +2,21 @@
 
 read -p "| Require 64+ GB of RAM memory and few hours |"
 set -e
-
+PRGNAM=hipBLASLt
 cd $ROCM_REL_DIR
-wget https://github.com/ROCm/hipBLASLt/archive/rocm-$PKGVER.tar.gz
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
 wget https://www.ixip.net/rocm/hipblaslt-find-msgpack5.patch
-tar xf hipBLASLt-$LDIR.tar.gz
-cd hipBLASLt-rocm-$PKGVER
+tar xf $PRGNAM-$LDIR.tar.gz
+cd $PRGNAM-$LDIR
 patch -Np1 -i $ROCM_REL_DIR/hipblaslt-find-msgpack5.patch
-rm -rf $ROCM_BUILD_DIR/hipblaslt
-mkdir -p $ROCM_BUILD_DIR/hipblaslt
-cd $ROCM_BUILD_DIR/hipblaslt
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 
 pushd .
 
-DEST=$OUTPUT/package-hipblaslt
-PRGNAM=hipBLASLt
+DEST=$OUTPUT/package-$PRGNAM
+
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) - 8) "}
 BUILD=1
 rm -rf $DEST
@@ -29,7 +29,7 @@ cmake \
     -D CMAKE_C_COMPILER=${ROCM_INSTALL_DIR}/llvm/bin/amdclang \
     -D AMDGPU_TARGETS="gfx900;gfx90a;gfx942;gfx1030;gfx1100;gfx1101;gfx1102;gfx1200;gfx1201" \
     -D Tensile_CODE_OBJECT_VERSION=default \
-    $ROCM_REL_DIR/hipBLASLt-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
