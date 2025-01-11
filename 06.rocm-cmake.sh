@@ -2,15 +2,16 @@
 
 set -e
 
-cd $ROCM_REL_DIR
-wget https://github.com/ROCm/rocm-cmake/archive/rocm-$PKGVER.tar.gz
-tar xf rocm-cmake-$LDIR.tar.gz
-rm -rf $ROCM_BUILD_DIR/rocm-cmake
-mkdir -p $ROCM_BUILD_DIR/rocm-cmake
-cd $ROCM_BUILD_DIR/rocm-cmake
 PRGNAM=rocm-cmake
+cd $ROCM_REL_DIR
+wget https://github.com/ROCm/$PRGNAMe/archive/rocm-$PKGVER.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
+
 BUILD=1
-DEST=$OUTPUT/package-rocm-cmake
+DEST=$OUTPUT/package-$PRGNAM
 rm -rf $DEST
 
 pushd .
@@ -54,4 +55,3 @@ cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
 
 popd
-
