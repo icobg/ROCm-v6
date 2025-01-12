@@ -43,7 +43,6 @@ aomp
 rocAL
 rocDecode
 rocJPEG
-rpp
 ```
 
 Have fun and cheers,
