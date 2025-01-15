@@ -24,9 +24,9 @@ cmake \
     -D CMAKE_CXX_COMPILER=/opt/rocm/bin/amdclang++ \
     -D OpenMP_CXX_FLAGS="-fopenmp -Wno-unused-command-line-argument" \
     -D OpenMP_CXX_LIB_NAMES="libomp;libgomp;libiomp5" \
-    -D OpenMP_libomp_LIBRARY="/usr/lib64/libomp.so" \
-    -D OpenMP_libgomp_LIBRARY="/usr/lib64/libgomp.so" \
-    -D OpenMP_libiomp5_LIBRARY="/usr/lib64/libiomp5.so" \
+    -D OpenMP_libomp_LIBRARY="/opt/rocm/lib/libomp.so" \
+    -D OpenMP_libgomp_LIBRARY="/opt/rocm/lib/libgomp.so" \
+    -D OpenMP_libiomp5_LIBRARY="/opt/rocm/lib/libiomp5.so" \
     -D ROCWMMA_BUILD_SAMPLES=OFF \
     -D ROCWMMA_BUILD_TESTS=OFF \
     -D ROCWMMA_BUILD_VALIDATION_TESTS=OFF \
