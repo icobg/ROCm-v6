@@ -32,17 +32,11 @@ Follow the build order.
 
 ## Not Build
 
-The few packages from ROCm does not compiled for some reasons,
-most of them because they required AMD GPU driver which currently
-could be build successful only on kernel 5.x
+The few packages from ROCm does not compiled for some reasons.
 
 These packages from "ROCm core packages" are:
 ```
-rdc
-aomp
-rocAL
-rocDecode
-rocJPEG
+Currently no packages
 ```
 
 Have fun and cheers,
