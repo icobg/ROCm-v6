@@ -39,5 +39,13 @@ These packages from "ROCm core packages" are:
 Currently no packages
 ```
 
+### AMF header files
+
+The package 100.amdprolibs.sh contain the AMF Header files and some
+libraries.
+
+>[!NOTE]
+> I'm using wget with content-disposition=on into /etc/wgetrc config file.
+
 Have fun and cheers,
 Condor
