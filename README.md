@@ -8,7 +8,7 @@ First you need to activate the environment with
    source rocm-environment.sh
 ```
 
-With these scripts I build ROCm from version 6.1 to 6.3.1. Just change
+With these scripts I build ROCm from version 6.1 to 6.3.2. Just change
 version number in rocm-environment.sh file. You could found some precompiled
 binary packages from me and oldest versions: 6.2.0, 6.2.4, 6.3.0 and 6.3.1
 on my server [HERE](https://www.ixip.net/rocm/)
