@@ -1,7 +1,6 @@
 #!/bin/sh
 
-printf "This is AMF headers + AMD GPUPRO library \n"
-printf "To use AMF hardware encoding, you will need to recompile ffmpeg with AMF support \n"
+printf "AMD GPUPRO library \n"
 printf "Also few libraries will be needed, this is the whole set - closed source \n"
 printf "\n\n"
 printf "The X is working but for some reason Wayland not work and I can't figure it out why \n"
@@ -17,7 +16,7 @@ pushd .
 PRGNAM=amdgpu-pro
 PKGVER=24.30
 ARCH=x86_64
-BUILD=6
+BUILD=7
 TAG=condor
 
 major=24.30
@@ -26,7 +25,6 @@ minor=2079599
 ubuntu_ver=22.04
 repo_folder_ver=6.3
 amf_ver=1.4.36
-amf_inc=1.4.35
 tmp=/tmp/condor/amdgpu
 src=/tmp/gpu
 
@@ -58,8 +56,6 @@ wget https://repo.radeon.com/amdgpu/${repo_folder_ver}/ubuntu/pool/proprietary/o
 wget https://repo.radeon.com/amdgpu/${repo_folder_ver}/ubuntu/pool/proprietary/o/oglp-amdgpu-pro/libgles1-amdgpu-pro-oglp_${major_short}-${minor}.${ubuntu_ver}_amd64.deb
 wget https://repo.radeon.com/amdgpu/${repo_folder_ver}/ubuntu/pool/proprietary/o/oglp-amdgpu-pro/libgles2-amdgpu-pro-oglp_${major_short}-${minor}.${ubuntu_ver}_amd64.deb
 wget https://repo.radeon.com/amdgpu/${repo_folder_ver}/ubuntu/pool/proprietary/v/vulkan-amdgpu-pro/vulkan-amdgpu-pro_${major_short}-${minor}.${ubuntu_ver}_amd64.deb
-#wget https://github.com/GPUOpen-LibrariesAndSDKs/AMF/archive/refs/tags/v${amf_inc}.tar.gz
-wget https://github.com/GPUOpen-LibrariesAndSDKs/AMF/releases/download/v${amf_inc}/AMF-headers-v${amf_inc}.tar.gz
 
 files="
 amf-amdgpu-pro_${amf_ver}-${minor}.${ubuntu_ver}_amd64.deb
@@ -110,17 +106,10 @@ move_to_dir() {
     mv amd_icd64.json amd_pro_icd64.json
     sed -i "s#/opt/amdgpu-pro/lib/x86_64-linux-gnu/amdvlk64.so#/opt/amdgpu/lib64/amdvlk64.so#" $tmp/opt/amdgpu/etc/vulkan/icd.d/amd_pro_icd64.json
     rm -rf $tmp/opt/amdgpu-pro
+    rm -rf $tmp/usr
 }
 
 move_to_dir
-
-cd $src
-tar xf $src/AMF-headers-v${amf_inc}.tar.gz
-cd amf-headers-v${amf_inc}
-mkdir -p $tmp/usr/include
-mv AMF $tmp/usr/include
-cd $src
-rm -rf amf-headers-v${amf_inc}
 
 mkdir -p $tmp/install
 cat >> $tmp/install/slack-desc << 'END'
@@ -131,18 +120,18 @@ cat >> $tmp/install/slack-desc << 'END'
 # You must make exactly 11 lines for the formatting to be correct.  It's also
 # customary to leave one space after the ':' except on otherwise blank lines.
 
-      |-----handy-ruler------------------------------------------------------|
-amdgpu: amdgpu (AMDGPU Pro Advanced Multimedia Framework)
-amdgpu:
-amdgpu: amdgpu contain AMDGPU Pro libraries
-amdgpu:
-amdgpu: Do not replace the system libraries, the X works but Wayland does not.
-amdgpu:
-amdgpu:
-amdgpu:
-amdgpu:
-amdgpu: This is the BINARY VERSION
-amdgpu:
+          |-----handy-ruler------------------------------------------------------|
+amdgpu-pro: amdgpu-pro (AMDGPU Pro Advanced Multimedia Framework)
+amdgpu-pro:
+amdgpu-pro: amdgpu contain AMDGPU Pro libraries
+amdgpu-pro:
+amdgpu-pro: Do not replace the system libraries, the X works but Wayland does not.
+amdgpu-pro:
+amdgpu-pro:
+amdgpu-pro:
+amdgpu-pro:
+amdgpu-pro: This is the BINARY VERSION
+amdgpu-pro:
 END
 
 cd $tmp
