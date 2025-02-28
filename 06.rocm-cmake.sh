@@ -4,7 +4,7 @@ set -e
 
 PRGNAM=rocm-cmake
 cd $ROCM_REL_DIR
-wget https://github.com/ROCm/$PRGNAMe/archive/rocm-$PKGVER.tar.gz
+wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
 tar xf $PRGNAM-$LDIR.tar.gz
 rm -rf $ROCM_BUILD_DIR/$PRGNAM
 mkdir -p $ROCM_BUILD_DIR/$PRGNAM
