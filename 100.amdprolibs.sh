@@ -14,17 +14,17 @@ set -e
 pushd .
 
 PRGNAM=amdgpu-pro
-PKGVER=24.30
+PKGVER=25.10
 ARCH=x86_64
-BUILD=7
+BUILD=1
 TAG=condor
 
-major=24.30
-major_short=24.30
-minor=2079599
-ubuntu_ver=22.04
-repo_folder_ver=6.3
-amf_ver=1.4.36
+major=25.10
+major_short=25.10
+minor=2148023
+ubuntu_ver=24.04
+repo_folder_ver=6.4
+amf_ver=1.4.37
 tmp=/tmp/condor/amdgpu
 src=/tmp/gpu
 
