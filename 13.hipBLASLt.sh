@@ -1,6 +1,11 @@
 #!/bin/bash
 
 read -p "| Require 64+ GB of RAM memory and few hours |"
+if [[ ! -z "${VIRTUAL_ENV}" ]]; then
+    printf "\n Deactivate your Python virtual environment \n"
+    read
+fi
+
 set -e
 PRGNAM=hipBLASLt
 cd $ROCM_REL_DIR
@@ -29,10 +34,10 @@ cmake \
     -D CMAKE_C_COMPILER=${ROCM_INSTALL_DIR}/llvm/bin/amdclang \
     -D AMDGPU_TARGETS="gfx900;gfx90a;gfx942;gfx1030;gfx1100;gfx1101;gfx1102;gfx1200;gfx1201" \
     -D Tensile_CODE_OBJECT_VERSION=default \
-    $ROCM_REL_DIR/$PRGNAM-$LDIR
+    $ROCM_REL_DIR/$PRGNAM-$LDIR | tee /tmp/configure-${PRGNAM}.log
 
-cmake --build . $NUMJOBS
-DESTDIR=$DEST cmake --install . --strip
+cmake --build . $NUMJOBS 2>&1 | tee /tmp/make-${PRGNAM}.log
+DESTDIR=$DEST cmake --install . --strip 2>&1 | tee /tmp/install-${PRGNAM}.log
 
 mkdir -p $DEST/install
 cat >> $DEST/install/slack-desc << 'END'
