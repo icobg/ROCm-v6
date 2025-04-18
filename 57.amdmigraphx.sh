@@ -34,6 +34,7 @@ LDFLAGS=-lstdc++ cmake \
     -D ROCM_ENABLE_CLANG_TIDY=OFF \
     -D MIGRAPHX_ENABLE_MLIR=ON \
     -D MIGRAPHX_ENABLE_CPU=OFF \
+    -D CMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -D AMDGPU_TARGETS="gfx900;gfx906:xnack-;gfx908:xnack-;gfx90a;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1200;gfx1201" \
     -D GPU_TARGETS="gfx900;gfx906:xnack-;gfx908:xnack-;gfx90a;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1200;gfx1201" \
     $ROCM_REL_DIR/$PRGNAM-$LDIR
