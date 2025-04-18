@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [[ -z "${VIRTUAL_ENV}" ]]; then
+    printf "\n This module requires enabling the Python virtual environment \n"
+    read
+fi
+
+
 set -e
 PRGNAM=rocprofiler
 cd $ROCM_REL_DIR
