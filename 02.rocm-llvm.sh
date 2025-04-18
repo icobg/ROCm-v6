@@ -4,11 +4,11 @@ set -e
 
 cd $ROCM_REL_DIR
 wget https://github.com/ROCm/llvm-project/archive/rocm-$PKGVER.tar.gz
-#wget https://www.ixip.net/rocm/rocm-llvm-fix-segfault.patch
+wget https://www.ixip.net/rocm/130334.diff
 tar xf llvm-project-rocm-$PKGVER.tar.gz
 cd llvm-project-rocm-$PKGVER
 
-#patch -Np1 -i $ROCM_REL_DIR/rocm-llvm-fix-segfault.patch
+patch -Np1 -i $ROCM_REL_DIR/130334.diff
 rm -rf $ROCM_BUILD_DIR/llvm-amdgpu
 mkdir -p $ROCM_BUILD_DIR/llvm-amdgpu
 cd $ROCM_BUILD_DIR/llvm-amdgpu
