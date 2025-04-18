@@ -5,11 +5,16 @@ set -e
 echo "Building ROCm Device Libraries"
 
 PRGNAM=rocm-device-libs
+
+wget https://www.ixip.net/rocm/a18cc4c.patch
+
 rm -rf $ROCM_BUILD_DIR/$PRGNAM
 mkdir -p $ROCM_BUILD_DIR/$PRGNAM
 cd $ROCM_BUILD_DIR/$PRGNAM
 
 LLVMNAM=llvm-project
+
+( cd $ROCM_REL_DIR/$LLVMNAM-$LDIR && patch -Np1 -i $ROCM_REL_DIR/a18cc4c.patch )
 
 BUILD=1
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
