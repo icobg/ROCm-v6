@@ -51,7 +51,7 @@ Currently no packages
 ### AMDGPU PRO libraries
 
 The package 100.amdprolibs.sh is separete package contain AMDGPU PRO libraries.
-To need to compile / install full ROCm.
+This package does not need to compile / install full ROCm.
 
 Have fun and cheers,
 Condor
