@@ -1,6 +1,13 @@
 #!/bin/bash
 
 read -p "Taking few hours, don't use virtual environment"
+
+if [[ ! -z "${VIRTUAL_ENV}" ]]; then
+    printf "\n Deactivate your Python virtual environment \n"
+    read
+fi
+
+
 set -e
 
 PRGNAM=rocBLAS
@@ -45,8 +52,8 @@ cmake \
     -D TENSILE_VENV_UPGRADE_PIP=ON \
     -D Tensile_LIBRARY_FORMAT=yaml \
     -D Tensile_TEST_LOCAL_PATH="$ROCM_REL_DIR/$tensile_dir" \
-    -D TENSILE_GPU_ARCHS="gfx803;gfx900;gfx906;gfx908;gfx90a;gfx1010;gfx1011;gfx1012;gfx1030;gfx1031;gfx1032;gfx1034;gfx1035;" \
-    -D Tensile_ARCHITECTURE="gfx900;gfx906:xnack-;gfx908:xnack-;gfx90a;gfx1010;gfx1012;gfx1030;gfx1151;" \
+    -D TENSILE_GPU_ARCHS="gfx900;gfx906:xnack-;gfx908:xnack-;gfx90a;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1200;gfx1201;" \
+    -D Tensile_ARCHITECTURE="gfx900;gfx906:xnack-;gfx908:xnack-;gfx90a;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1200;gfx1201;" \
     -G "Unix Makefiles" \
     $ROCM_REL_DIR/$PRGNAM-$LDIR
 
