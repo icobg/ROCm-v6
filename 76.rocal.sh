@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -p "Require Tencent version of RapidJSON which exists on ixip.net"
+read -p "Require latest Tencent version of RapidJSON which exists on ixip.net"
 
 set -e
 
@@ -8,13 +8,13 @@ PRGNAM=rocAL
 
 cd $ROCM_REL_DIR
 wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
-wget https://www.ixip.net/rocm/0001-ffmpeg7-fix.patch
-wget https://www.ixip.net/rocm/0003-ffmpeg7-fix.patch
+#wget https://www.ixip.net/rocm/0001-ffmpeg7-fix.patch
+#wget https://www.ixip.net/rocm/0003-ffmpeg7-fix.patch
 
 tar xf $PRGNAM-$LDIR.tar.gz
-cd $PRGNAM-$LDIR
-patch -Np1 -i $ROCM_REL_DIR/0001-ffmpeg7-fix.patch
-patch -Np1 -i $ROCM_REL_DIR/0003-ffmpeg7-fix.patch
+#cd $PRGNAM-$LDIR
+#patch -Np1 -i $ROCM_REL_DIR/0001-ffmpeg7-fix.patch
+#patch -Np1 -i $ROCM_REL_DIR/0003-ffmpeg7-fix.patch
 
 rm -rf $ROCM_BUILD_DIR/$PRGNAM
 mkdir -p $ROCM_BUILD_DIR/$PRGNAM
