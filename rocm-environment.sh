@@ -2,12 +2,12 @@
 
 export ROCM_INSTALL_DIR=/opt/rocm
 export ROCM_MAJOR_VERSION=6
-export ROCM_MINOR_VERSION=3
-export ROCM_PATCH_VERSION=3
-export ROCM_MAGIC=74
-export PKGVER=6.3.3
-export ROCM_LIBPATCH_VERSION=60303
-export ROCM_VERSION=60303
+export ROCM_MINOR_VERSION=4
+export ROCM_PATCH_VERSION=0
+export ROCM_MAGIC=47
+export PKGVER=6.4.0
+export ROCM_LIBPATCH_VERSION=60400
+export ROCM_VERSION=60400
 export ROCM_PKGTYPE=TGZ
 export ROCM_REL_DIR=/usr/local/src/rocm/release
 export ROCM_BUILD_DIR=/usr/local/src/rocm/rocm-build/build
