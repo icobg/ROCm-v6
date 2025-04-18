@@ -33,6 +33,7 @@ CXX=$ROCM_INSTALL_DIR/llvm/bin/clang++ cmake \
     -D HALF_INCLUDE_DIR=/usr/include/half \
     -D BUILD_TESTING=NO \
     -D Boost_USE_STATIC_LIBS=NO \
+    -D CMAKE_POLICY_VERSION_MINIMUM=3.5 \
     $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
