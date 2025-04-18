@@ -39,6 +39,8 @@ cmake \
     -DHIP_CATCH_TEST=0 \
     -DCLR_BUILD_HIP=ON \
     -DCLR_BUILD_OCL=OFF \
+    -DROCCLR_ENABLE_HSA=ON \
+    -DROCCLR_ENABLE_LC=ON \
     -G Ninja \
     $ROCM_REL_DIR/clr-$LDIR
 
