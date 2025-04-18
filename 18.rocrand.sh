@@ -5,7 +5,7 @@ set -e
 PRGNAM=rocRAND
 cd $ROCM_REL_DIR
 wget https://github.com/ROCmSoftwarePlatform/$PRGNAM/archive/rocm-$PKGVER.tar.gz
-tar xf $PRGNAMD-$LDIR.tar.gz
+tar xf $PRGNAM-$LDIR.tar.gz
 
 rm -rf $ROCM_BUILD_DIR/$PRGNAM
 mkdir -p $ROCM_BUILD_DIR/$PRGNAM
