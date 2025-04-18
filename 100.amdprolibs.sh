@@ -21,7 +21,7 @@ TAG=condor
 
 major=25.10
 major_short=25.10
-minor=2148023
+minor=2148022
 ubuntu_ver=24.04
 repo_folder_ver=6.4
 amf_ver=1.4.37
@@ -47,7 +47,7 @@ extract_deb() {
 }
 
 wget https://repo.radeon.com/amdgpu/${repo_folder_ver}/ubuntu/pool/proprietary/a/amf-amdgpu-pro/amf-amdgpu-pro_${amf_ver}-${minor}.${ubuntu_ver}_amd64.deb
-wget https://repo.radeon.com/amdgpu/${repo_folder_ver}/ubuntu/pool/proprietary/liba/libamdenc-amdgpu-pro/libamdenc-amdgpu-pro_1.0-${minor}.${ubuntu_ver}_amd64.deb
+wget https://repo.radeon.com/amdgpu/${repo_folder_ver}/ubuntu/pool/proprietary/liba/libamdenc-amdgpu-pro/libamdenc-amdgpu-pro_${major_short}-${minor}.${ubuntu_ver}_amd64.deb
 wget https://repo.radeon.com/amdgpu/${repo_folder_ver}/ubuntu/pool/proprietary/o/oglp-amdgpu-pro/libegl1-amdgpu-pro-oglp_${major_short}-${minor}.${ubuntu_ver}_amd64.deb
 wget https://repo.radeon.com/amdgpu/${repo_folder_ver}/ubuntu/pool/proprietary/o/oglp-amdgpu-pro/libgl1-amdgpu-pro-oglp-dri_${major_short}-${minor}.${ubuntu_ver}_amd64.deb
 wget https://repo.radeon.com/amdgpu/${repo_folder_ver}/ubuntu/pool/proprietary/o/oglp-amdgpu-pro/libgl1-amdgpu-pro-oglp-ext_${major_short}-${minor}.${ubuntu_ver}_amd64.deb
@@ -59,7 +59,7 @@ wget https://repo.radeon.com/amdgpu/${repo_folder_ver}/ubuntu/pool/proprietary/v
 
 files="
 amf-amdgpu-pro_${amf_ver}-${minor}.${ubuntu_ver}_amd64.deb
-libamdenc-amdgpu-pro_1.0-${minor}.${ubuntu_ver}_amd64.deb
+libamdenc-amdgpu-pro_${major_short}-${minor}.${ubuntu_ver}_amd64.deb
 libegl1-amdgpu-pro-oglp_${major_short}-${minor}.${ubuntu_ver}_amd64.deb
 libgl1-amdgpu-pro-oglp-dri_${major_short}-${minor}.${ubuntu_ver}_amd64.deb
 libgl1-amdgpu-pro-oglp-ext_${major_short}-${minor}.${ubuntu_ver}_amd64.deb
