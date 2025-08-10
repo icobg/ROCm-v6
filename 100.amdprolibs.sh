@@ -130,7 +130,7 @@ amdgpu-pro:
 amdgpu-pro:
 amdgpu-pro:
 amdgpu-pro:
-amdgpu-pro: This is the BINARY VERSION
+amdgpu-pro: This package contains the BINARY VERSION of the files
 amdgpu-pro:
 END
 
