@@ -33,7 +33,6 @@ and you could download compiled binary or build scripts from repo written above.
 Follow the build order.
 
 >[!NOTE]
-> Don't use virtual environment when compile the rocBLAS
 >
 > The compilation process usual take 3 days if you will compile composable kernel package
 > if not, one day and half if no errors.
