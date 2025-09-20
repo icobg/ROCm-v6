@@ -44,7 +44,8 @@ The few packages from ROCm does not compiled for some reasons.
 
 These packages from "ROCm core packages" are:
 ```
-Currently no packages
+For the moment ROCm from version 6.4.3 to 7.0.1 it's unable to be compiled.
+Version 7.x of ROCm features new packages and a change in compilation order.
 ```
 
 ### AMDGPU PRO libraries
