@@ -12,9 +12,9 @@ First you need to activate the environment with
    source rocm-environment.sh
 ```
 
-With these scripts I build ROCm from version 6.1 to 6.4.0. Just change
+With these scripts I build ROCm from version 6.1 to 7.0.1. Just change
 version number in rocm-environment.sh file. You could found some precompiled
-binary packages from me version: 6.4.0 on my repository [HERE](https://www.ixip.net/rocm/)
+binary packages from me version: 7.0.1 on my repository [HERE](https://www.ixip.net/rocm/)
 
 1. Few packages will need to installed and all of them is required. Check file:
 
@@ -44,14 +44,15 @@ The few packages from ROCm does not compiled for some reasons.
 
 These packages from "ROCm core packages" are:
 ```
-For the moment ROCm from version 6.4.3 to 7.0.1 it's unable to be compiled.
-Version 7.x of ROCm features new packages and a change in compilation order.
+ROCmValidationSuite requires manual intervention
+rocSOLVER not compiled
 ```
 
 ### AMDGPU PRO libraries
 
 The package 100.amdprolibs.sh is separete package contain AMDGPU PRO libraries.
 This package does not need to compile / install full ROCm.
+I read somewhere AMD shutting down AMDGPU PRO project, last version is 6.4
 
 Have fun and cheers,
 Condor
