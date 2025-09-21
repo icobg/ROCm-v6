@@ -51,7 +51,7 @@ mkdir -p $DEST/usr/lib64
 mkdir -p $DEST/usr/include
 
 ln -s /opt/rocm/lib64/libamdhip64.so $DEST/usr/lib64/libamdhip64.so
-ln -s /opt/rocm/lib64/libamdhip64.so.6 $DEST/usr/lib64/libamdhip64.so.6
+ln -s /opt/rocm/lib64/libamdhip64.so.7 $DEST/usr/lib64/libamdhip64.so.7
 #ln -s /opt/rocm/lib64/libamdhip64.so.6.3.42133 $DEST/usr/lib64/libamdhip64.so.6.3.42133
 ln -s /opt/rocm/include/hip $DEST/usr/include/hip
 
