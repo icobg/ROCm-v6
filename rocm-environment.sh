@@ -1,20 +1,22 @@
 #!/bin/bash
 
 export ROCM_INSTALL_DIR=/opt/rocm
-export ROCM_MAJOR_VERSION=6
-export ROCM_MINOR_VERSION=4
-export ROCM_PATCH_VERSION=3
-export ROCM_MAGIC=128
-export PKGVER=6.4.3
-export ROCM_LIBPATCH_VERSION=60403
-export ROCM_VERSION=60403
+export ROCM_MAJOR_VERSION=7
+export ROCM_MINOR_VERSION=0
+export ROCM_PATCH_VERSION=1
+export ROCM_MAGIC=42
+export PKGVER=7.0.1
+export ROCM_LIBPATCH_VERSION=70001
+export ROCM_VERSION=70001
 export ROCM_PKGTYPE=TGZ
 export ROCM_REL_DIR=/usr/local/src/rocm/release
 export ROCM_BUILD_DIR=/usr/local/src/rocm/rocm-build/build
 # Uncomment line bellow only if you will build all kernels, for home users autodetected is better
-#export AMDGPU_TARGETS="gfx900;gfx906:xnack-;gfx908:xnack-;gfx90a;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1200;gfx1201"
+#export AMDGPU_TARGETS="gfx803,gfx900,gfx906,gfx908,gfx90a,gfx942,gfx950,gfx1030,gfx1100,gfx1101,gfx1102,gfx1151,gfx1200,gfx1201"
+export LIBRARY_PATH=$ROCM_INSTALL_DIR/lib:$LIBRARY_PATH
+export LD_LIBRARY_PATH=$ROCM_INSTALL_DIR/lib:$LD_LIBRARY_PATH
 export PATH=$ROCM_INSTALL_DIR/bin:$ROCM_INSTALL_DIR/llvm/bin:$ROCM_INSTALL_DIR/hip/bin:$CMAKE_DIR/bin:$PATH
 export ARCH=${ARCH:-x86_64}
-export OUTPUT=${OUTPUT:-/usr/local/src/roc}
+export OUTPUT=${OUTPUT:-/mnt/arch/roc}
 export LDIR=${LDIR:-rocm-}${PKGVER}
 export TAG=condor
