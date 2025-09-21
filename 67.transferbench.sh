@@ -8,9 +8,9 @@ cd $ROCM_REL_DIR
 wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
 tar xf $PRGNAM-$LDIR.tar.gz
 cd $PRGNAM-$LDIR
-#rm -rf $ROCM_BUILD_DIR/$PRGNAM
-#mkdir -p $ROCM_BUILD_DIR/$PRGNAM
-#cd $ROCM_BUILD_DIR/$PRGNAM
+rm -rf $ROCM_BUILD_DIR/$PRGNAM
+mkdir -p $ROCM_BUILD_DIR/$PRGNAM
+cd $ROCM_BUILD_DIR/$PRGNAM
 
 pushd .
 
