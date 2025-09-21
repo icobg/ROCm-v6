@@ -37,6 +37,8 @@ cmake \
     -D CMAKE_CXX_FLAGS="${CXXFLAGS} -fcf-protection=none -fPIC" \
     -D CMAKE_C_FLAGS="${C_FLAGS} -fPIC" \
     -D CMAKE_SHARED_LINKER_FLAGS="$LD_RUNPATH_FLAG" \
+    -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
+    -D CMAKE_MODULE_PATH=$ROCM_INSTALL_DIR/lib/cmake/hip \
     $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS || exit 1
