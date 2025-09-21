@@ -17,16 +17,17 @@ rm -rf $DEST
 
 pushd .
 
+# -babeltrace require external library
+
 export PKG_CONFIG_PATH="/opt/rocm/share/pkgconfig:$PKG_CONFIG_PATH"
-$ROCM_REL_DIR/$PRGNAM-$LDIR/configure \
-        --prefix=/opt/rocm \
+LDFLAGS="-Wl,--enable-new-dtags,-rpath=$ROCM_INSTALL_DIR/lib" $ROCM_REL_DIR/$PRGNAM-$LDIR/configure \
+        --prefix=$ROCM_INSTALL_DIR \
         --program-prefix=roc \
-        --disable-binutils \
         --disable-gprofng \
         --disable-gprof \
         --enable-tui \
         --enable-64-bit-bfd \
-        --enable-targets="amdgcn-amd-amdhsa" \
+        --enable-targets="x86_64-linux-gnu,amdgcn-amd-amdhsa" \
         --with-system-readline \
         --with-python=/usr/bin/python \
         --with-expat \
@@ -36,7 +37,9 @@ $ROCM_REL_DIR/$PRGNAM-$LDIR/configure \
         --disable-ld \
         --disable-gas \
         --disable-gdbserver \
-        --disable-sim
+        --disable-sim \
+        --without-guile \
+        --with-rocm-dbgapi=$ROCM_INSTALL_DIR
 
 make $NUMJOBS
 make DESTDIR=$DEST install
