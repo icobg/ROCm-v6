@@ -33,9 +33,8 @@ DESTDIR=$DESTCOMGR cmake --install . --strip
 
 mkdir -p $DESTCOMGR/usr/lib64
 ln -s /opt/rocm/lib64/libamd_comgr.so $DESTCOMGR/usr/lib64/libamd_comgr.so
-ln -s /opt/rocm/lib64/libamd_comgr.so.2 $DESTCOMGR/usr/lib64/libamd_comgr.so.2
-ln -s /opt/rocm/lib64/libamd_comgr.so.2.$ROCM_VERSION $DESTCOMGR/usr/lib64/libamd_comgr.so.2.8.$ROCM_VERSION
-
+ln -s /opt/rocm/lib64/libamd_comgr.so.3 $DESTCOMGR/usr/lib64/libamd_comgr.so.3
+ln -s /opt/rocm/lib64/libamd_comgr.so.3.$ROCM_VERSION $DESTCOMGR/usr/lib64/libamd_comgr.so.3.0.$ROCM_VERSION
 
 mkdir -p $DESTCOMGR/install
 cat >> $DESTCOMGR/install/slack-desc << 'END'
