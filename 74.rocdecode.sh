@@ -6,7 +6,11 @@ PRGNAM=rocDecode
 
 cd $ROCM_REL_DIR
 wget https://github.com/ROCm/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+wget https://www.ixip.net/rocm/ffmpeg7.patch
 tar xf $PRGNAM-$LDIR.tar.gz
+cd $PRGNAM-$LDIR
+patch -Np1 -i $ROCM_REL_DIR/ffmpeg7.patch
+
 rm -rf $ROCM_BUILD_DIR/$PRGNAM
 mkdir -p $ROCM_BUILD_DIR/$PRGNAM
 cd $ROCM_BUILD_DIR/$PRGNAM
