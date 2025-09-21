@@ -22,7 +22,11 @@ CXX=$ROCM_INSTALL_DIR/bin/amdclang cmake \
     -D CMAKE_CXX_COMPILER=${ROCM_INSTALL_DIR}/bin/amdclang \
     -D CMAKE_C_COMPILER=${ROCM_INSTALL_DIR}/llvm/bin/amdclang \
     -D CMAKE_CXX_FLAGS="${CXXFLAGS} -fcf-protection=none" \
-    -DCMAKE_BUILD_TYPE=Release \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D HIP_PLATFORM=amd \
+    -D BUILD_CLIENTS_TESTS=OFF \
+    -D BUILD_CLIENTS_BENCHMARKS=OFF \
+    -D BUILD_CLIENTS_SAMPLES=OFF \
     $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
