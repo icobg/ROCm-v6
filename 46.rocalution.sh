@@ -24,15 +24,23 @@ cmake \
     -Wno-dev \
     -D CMAKE_BUILD_TYPE=Release \
     -D CMAKE_TOOLCHAIN_FILE="$ROCM_REL_DIR/$PRGNAM-$LDIR/toolchain-linux.cmake" \
-    -D CMAKE_CXX_FLAGS="${CXXLFLAGS} -fcf-protection=none" \
     -D CMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
     -D ROCM_PATH=${ROCM_INSTALL_DIR} \
     -D SUPPORT_HIP=ON \
     -D BUILD_SHARED_LIBS=ON \
+    -D BUILD_CLIENTS_TESTS=OFF \
+    -D BUILD_CLIENTS_BENCHMARKS=OFF \
+    -D BUILD_CLIENTS_SAMPLES=OFF \
+    -D USE_HIPCXX=ON \
+    -D OpenMP_C_FLAGS="-fopenmp -Wno-unused-command-line-argument" \
+    -D OpenMP_C_LIB_NAMES="libomp;libgomp;libiomp5" \
+    -D OpenMP_CXX_FLAGS="-fopenmp -Wno-unused-command-line-argument" \
+    -D OpenMP_CXX_LIB_NAMES="libomp;libgomp;libiomp5" \
+    -D OpenMP_libomp_LIBRARY="/opt/rocm/lib/libomp.so" \
+    -D OpenMP_libgomp_LIBRARY="/opt/rocm/lib/libgomp.so" \
+    -D OpenMP_libiomp5_LIBRARY="/opt/rocm/lib/libiomp5.so" \
     $ROCM_REL_DIR/$PRGNAM-$LDIR
 
-#    -D SUPPORT_OMP=ON \
-#    -D SUPPORT_MPI=ON \
 cmake --build . $NUMJOBS
 DESTDIR=$DEST cmake --install . --strip
 
