@@ -45,7 +45,6 @@ The few packages from ROCm does not compiled for some reasons.
 These packages from "ROCm core packages" are:
 ```
 ROCmValidationSuite requires manual intervention
-rocSOLVER not compiled
 ```
 
 ### AMDGPU PRO libraries
