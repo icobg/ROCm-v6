@@ -32,15 +32,19 @@ HIP_DIR=$ROCM_REL_DIR/HIP-$LDIR
 cd $ROCM_BUILD_DIR/clr
 cmake \
     -Wno-dev \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
-    -DHIP_COMMON_DIR="$HIP_DIR" \
-    -DPROF_API_HEADER_DIR=${ROCM_INSTALL_DIR}/include/rocprofiler-register \
-    -DHIP_CATCH_TEST=0 \
-    -DCLR_BUILD_HIP=ON \
-    -DCLR_BUILD_OCL=OFF \
-    -DROCCLR_ENABLE_HSA=ON \
-    -DROCCLR_ENABLE_LC=ON \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D CMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
+    -D CMAKE_CXX_COMPILER=${ROCM_INSTALL_DIR}/bin/amdclang++ \
+    -D CMAKE_CXX_FLAGS="${CXXFLAGS} -DNDEBUG" \
+    -D CMAKE_C_COMPILER=${ROCM_INSTALL_DIR}/bin/amdclang \
+    -D CMAKE_C_FLAGS="${CXXFLAGS} -DNDEBUG" \
+    -D HIP_COMMON_DIR="$HIP_DIR" \
+    -D PROF_API_HEADER_DIR=${ROCM_INSTALL_DIR}/include/rocprofiler-register \
+    -D HIP_CATCH_TEST=0 \
+    -D CLR_BUILD_HIP=ON \
+    -D CLR_BUILD_OCL=OFF \
+    -D ROCCLR_ENABLE_HSA=ON \
+    -D ROCCLR_ENABLE_LC=ON \
     -G Ninja \
     $ROCM_REL_DIR/clr-$LDIR
 
@@ -52,7 +56,6 @@ mkdir -p $DEST/usr/include
 
 ln -s /opt/rocm/lib64/libamdhip64.so $DEST/usr/lib64/libamdhip64.so
 ln -s /opt/rocm/lib64/libamdhip64.so.7 $DEST/usr/lib64/libamdhip64.so.7
-#ln -s /opt/rocm/lib64/libamdhip64.so.6.3.42133 $DEST/usr/lib64/libamdhip64.so.6.3.42133
 ln -s /opt/rocm/include/hip $DEST/usr/include/hip
 
 mkdir -p $DEST/install
