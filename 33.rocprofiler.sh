@@ -38,6 +38,9 @@ cmake \
     -D ROCPROFILER_BUILD_PLUGIN_PERFETTO=OFF \
     -D CMAKE_CXX_FLAGS="${CXXFLAGS} -fcf-protection=none -fPIC" \
     -D PROF_API_HEADER_PATH=$ROCM_REL_DIR/roctracer-$LDIR/inc/ext \
+    -D CMAKE_POSITION_INDEPENDENT_CODE=ON \
+    -D ENABLE_LDCONFIG=OFF \
+    -D USE_PROF_API=1 \
     $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
