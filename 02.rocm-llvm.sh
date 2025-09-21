@@ -18,7 +18,7 @@ cd $ROCM_BUILD_DIR/llvm-amdgpu
 DEST=$OUTPUT/package-rocm-llvm
 PRGNAM=llvm-project
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
-BUILD=3
+BUILD=1
 
 rm -rf $DEST
 
