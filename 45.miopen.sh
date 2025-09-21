@@ -16,24 +16,19 @@ pushd .
 DEST=$OUTPUT/package-$PRGNAM
 rm -rf $DEST
 
-
 NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 
-export CC=${ROCM_INSTALL_DIR}/llvm/bin/clang
-export CXX=${ROCM_INSTALL_DIR}/llvm/bin/clang++
-
-CXX=$ROCM_INSTALL_DIR/llvm/bin/clang++ cmake \
+cmake \
     -Wno-dev \
-    -D CMAKE_CXX_FLAGS="${CXXFLAGS} -fcf-protection=none -DNDEBUG" \
+    -D CMAKE_CXX_COMPILER=${ROCM_INSTALL_DIR}/llvm/bin/amdclang++ \
     -D CMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
     -D CMAKE_BUILD_TYPE=Release \
     -D MIOPEN_BACKEND=HIP \
     -D MIOPEN_INSTALL_CXX_HEADERS=ON \
-    -D HALF_INCLUDE_DIR=/usr/include/half \
+    -D HALF_INCLUDE_DIR=${ROCM_INSTALL_DIR}/include/half \
     -D BUILD_TESTING=NO \
     -D Boost_USE_STATIC_LIBS=NO \
-    -D CMAKE_POLICY_VERSION_MINIMUM=3.5 \
     $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
