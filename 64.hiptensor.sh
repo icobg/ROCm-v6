@@ -23,6 +23,8 @@ cmake \
     -D CMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
     -D CMAKE_CXX_COMPILER=/opt/rocm/bin/amdclang++ \
     -D BUILD_TESTS=OFF \
+    -D HIPTENSOR_BUILD_SAMPLES=OFF \
+    -D HIPTENSOR_BUILD_TESTS=OFF \
     $ROCM_REL_DIR/$PRGNAM-$LDIR
 
 cmake --build . $NUMJOBS
