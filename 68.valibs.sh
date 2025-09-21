@@ -6,8 +6,10 @@ set -e
 
 PRGNAM=libva-amdgpu-dev
 BUILD=1
-DIRVER=6.3
-AMDBUILD=2095006
+DIRVER=6.4.2.1
+ROCM_V=6.4
+AMDBUILD=2187269
+ROCM_VERSION=60402
 
 BASE="${ROCM_REL_DIR}/temp/tempdir"
 DEST="${ROCM_REL_DIR}/temp/tempdir"
@@ -22,20 +24,20 @@ function extractPacks()
 cd $ROCM_REL_DIR
 # need the library for rocDecode and rocJPEG
 
-wget https://repo.radeon.com/amdgpu/${PKGVER}/ubuntu/pool/main/libv/libvdpau-amdgpu/libvdpau1-amdgpu_${DIRVER}-${AMDBUILD}.24.04_amd64.deb
-wget https://repo.radeon.com/amdgpu/${PKGVER}/ubuntu/pool/main/libv/libvdpau-amdgpu/libvdpau-amdgpu-dev_${DIRVER}-${AMDBUILD}.24.04_amd64.deb
-wget https://repo.radeon.com/amdgpu/${PKGVER}/ubuntu/pool/main/libv/libva-amdgpu/libva-amdgpu-dev_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
-wget https://repo.radeon.com/amdgpu/${PKGVER}/ubuntu/pool/main/libv/libva-amdgpu/libva-amdgpu-drm2_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
-wget https://repo.radeon.com/amdgpu/${PKGVER}/ubuntu/pool/main/libv/libva-amdgpu/libva-amdgpu-glx2_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
-wget https://repo.radeon.com/amdgpu/${PKGVER}/ubuntu/pool/main/libv/libva-amdgpu/libva-amdgpu-wayland2_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
-wget https://repo.radeon.com/amdgpu/${PKGVER}/ubuntu/pool/main/libv/libva-amdgpu/libva-amdgpu-x11-2_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
-wget https://repo.radeon.com/amdgpu/${PKGVER}/ubuntu/pool/main/libv/libva-amdgpu/libva2-amdgpu_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
-wget https://repo.radeon.com/amdgpu/${PKGVER}/ubuntu/pool/main/libv/libva-amdgpu/va-amdgpu-driver-all_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
+wget https://repo.radeon.com/amdgpu/${DIRVER}/ubuntu/pool/main/libv/libvdpau-amdgpu/libvdpau1-amdgpu_${ROCM_V}-${AMDBUILD}.24.04_amd64.deb
+wget https://repo.radeon.com/amdgpu/${DIRVER}/ubuntu/pool/main/libv/libvdpau-amdgpu/libvdpau-amdgpu-dev_${ROCM_V}-${AMDBUILD}.24.04_amd64.deb
+wget https://repo.radeon.com/amdgpu/${DIRVER}/ubuntu/pool/main/libv/libva-amdgpu/libva-amdgpu-dev_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
+wget https://repo.radeon.com/amdgpu/${DIRVER}/ubuntu/pool/main/libv/libva-amdgpu/libva-amdgpu-drm2_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
+wget https://repo.radeon.com/amdgpu/${DIRVER}/ubuntu/pool/main/libv/libva-amdgpu/libva-amdgpu-glx2_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
+wget https://repo.radeon.com/amdgpu/${DIRVER}/ubuntu/pool/main/libv/libva-amdgpu/libva-amdgpu-wayland2_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
+wget https://repo.radeon.com/amdgpu/${DIRVER}/ubuntu/pool/main/libv/libva-amdgpu/libva-amdgpu-x11-2_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
+wget https://repo.radeon.com/amdgpu/${DIRVER}/ubuntu/pool/main/libv/libva-amdgpu/libva2-amdgpu_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
+wget https://repo.radeon.com/amdgpu/${DIRVER}/ubuntu/pool/main/libv/libva-amdgpu/va-amdgpu-driver-all_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
 
 mkdir temp && cd temp
 
-extractPacks libvdpau1-amdgpu_${DIRVER}-${AMDBUILD}.24.04_amd64.deb
-extractPacks libvdpau-amdgpu-dev_${DIRVER}-${AMDBUILD}.24.04_amd64.deb
+extractPacks libvdpau1-amdgpu_${ROCM_V}-${AMDBUILD}.24.04_amd64.deb
+extractPacks libvdpau-amdgpu-dev_${ROCM_V}-${AMDBUILD}.24.04_amd64.deb
 extractPacks libva-amdgpu-dev_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
 extractPacks libva-amdgpu-drm2_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
 extractPacks libva-amdgpu-glx2_2.16.0.${ROCM_VERSION}-${AMDBUILD}.24.04_amd64.deb
