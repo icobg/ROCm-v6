@@ -24,8 +24,7 @@ cmake \
     -Wno-dev \
     -D CMAKE_BUILD_TYPE=Release \
     -D CMAKE_TOOLCHAIN_FILE=toolchain-linux.cmake \
-    -D CMAKE_CXX_COMPILER=${ROCM_INSTALL_DIR}/bin/amdclang \
-    -D CMAKE_CXX_FLAGS="${CXXFLAGS} -fcf-protection=none" \
+    -D CMAKE_CXX_COMPILER=${ROCM_INSTALL_DIR}/bin/amdclang++ \
     -D CMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
     -D BUILD_FORTRAN_WRAPPER=ON \
     $ROCM_REL_DIR/$PRGNAM-$LDIR
