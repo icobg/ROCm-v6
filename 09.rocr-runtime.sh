@@ -14,6 +14,9 @@ NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 BUILD=1
 rm -rf $DEST
 
+BASE_CLANG_DIR=$ROCM_INSTALL_DIR/llvm/lib/clang
+export NEWEST_CLANG_VER=$(ls -1 $BASE_CLANG_DIR | sort -V | tail -n 1)
+
 pushd .
 
 cmake \
@@ -23,6 +26,8 @@ cmake \
     -D CMAKE_PREFIX_PATH=${ROCM_INSTALL_DIR} \
     -D CMAKE_CXX_FLAGS="$CXXFLAGS -DNDEBUG" \
     -D BUILD_SHARED_LIBS=ON \
+    -D LLVM_DIR=$ROCM_INSTALL_DIR/llvm/bin \
+    -D OPENCL_INC_DIR=$BASE_CLANG_DIR/$NEWEST_CLANG_VER/include \
     $ROCM_REL_DIR/ROCR-Runtime-$LDIR
 
 cmake --build . $NUMJOBS
@@ -51,10 +56,11 @@ hsa-rocr:
 hsa-rocr:
 END
 
+
 mkdir -p $DEST/usr/lib64
 ln -s /opt/rocm/lib64/libhsa-runtime64.so $DEST/usr/lib64/libhsa-runtime64.so
 ln -s /opt/rocm/lib64/libhsa-runtime64.so.1 $DEST/usr/lib64/libhsa-runtime64.so.1
-ln -s /opt/rocm/lib64/libhsa-runtime64.so.1.14.0 $DEST/usr/lib64/libhsa-runtime64.so.1.14.0
+ln -s /opt/rocm/lib64/libhsa-runtime64.so.1.18.0 $DEST/usr/lib64/libhsa-runtime64.so.1.18.0
 
 cd $DEST
 makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-${BUILD}$TAG.txz
