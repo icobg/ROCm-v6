@@ -6,7 +6,11 @@ set -e
 PRGNAM=rocSOLVER
 cd $ROCM_REL_DIR
 wget https://github.com/ROCmSoftwarePlatform/$PRGNAM/archive/rocm-$PKGVER.tar.gz
+wget https://www.ixip.net/rocm/rocsolver_array.patch
 tar xf $PRGNAM-$LDIR.tar.gz
+cd $PRGNAM-$LDIR
+patch -Np1 -i $ROCM_REL_DIR/rocsolver_array.patch
+
 rm -rf $ROCM_BUILD_DIR/$PRGNAM
 mkdir -p $ROCM_BUILD_DIR/$PRGNAM
 cd $ROCM_BUILD_DIR/$PRGNAM
@@ -25,8 +29,10 @@ export HIPCC_LINK_FLAGS_APPEND="-parallel-jobs=$(nproc)"
 cmake \
     -Wno-dev \
     -D CMAKE_BUILD_TYPE=Release \
-    -D CMAKE_CXX_COMPILER=${ROCM_INSTALL_DIR}/bin/amdclang \
-    -D CMAKE_CXX_FLAGS="${CXXFLAGS} -fcf-protection=none" \
+    -D CMAKE_CXX_COMPILER=${ROCM_INSTALL_DIR}/bin/amdclang++ \
+    -D CMAKE_CXX_FLAGS="${CXXFLAGS} -DNDEBUG" \
+    -D CMAKE_C_COMPILER=${ROCM_INSTALL_DIR}/bin/amdclang \
+    -D CMAKE_C_FLAGS="${CXXFLAGS} -DNDEBUG" \
     -D CMAKE_INSTALL_PREFIX=${ROCM_INSTALL_DIR} \
     -D ROCSOLVER_EMBED_FMT=ON \
     $ROCM_REL_DIR/$PRGNAM-$LDIR
