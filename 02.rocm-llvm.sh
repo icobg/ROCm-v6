@@ -5,10 +5,13 @@ set -e
 cd $ROCM_REL_DIR
 wget https://github.com/ROCm/llvm-project/archive/rocm-$PKGVER.tar.gz
 wget https://www.ixip.net/rocm/130334.diff
+wget https://www.ixip.net/rocm/platform_limits_posix.patch
 tar xf llvm-project-rocm-$PKGVER.tar.gz
 cd llvm-project-rocm-$PKGVER
 
 patch -Np1 -i $ROCM_REL_DIR/130334.diff
+patch -Np1 -i $ROCM_REL_DIR/platform_limits_posix.patch
+
 rm -rf $ROCM_BUILD_DIR/llvm-amdgpu
 mkdir -p $ROCM_BUILD_DIR/llvm-amdgpu
 cd $ROCM_BUILD_DIR/llvm-amdgpu
@@ -21,19 +24,21 @@ rm -rf $DEST
 
 pushd .
 
-cmake \
+    -DAMDGPU_TARGETS='gfx900;gfx906:xnack-;gfx908:xnack-;gfx90a;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1200;gfx1201' \
     -DCLANG_ENABLE_AMDCLANG=ON \
     -DCLANG_DEFAULT_LINKER=lld \
     -DCLANG_DEFAULT_RTLIB=compiler-rt \
     -DCLANG_DEFAULT_UNWINDLIB=libgcc \
     -DCLANG_INCLUDE_TESTS=OFF \
+    -DCLANG_LINK_FLANG_LEGACY=ON \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX='/opt/rocm/lib/llvm' \
     -DCMAKE_CXX_STANDARD=17 \
     -DFFI_INCLUDE_DIR='/usr/include' \
     -DFFI_LIBRARY_DIR='/usr/lib64' \
-    -DLLVM_ENABLE_PROJECTS='llvm;clang;lld;compiler-rt;clang-tools-extra;mlir' \
-    -DLLVM_ENABLE_RUNTIMES='libcxx;libcxxabi;libunwind' \
+    -DGPU_TARGETS='gfx900;gfx906:xnack-;gfx908:xnack-;gfx90a;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1200;gfx1201' \
+    -DLLVM_ENABLE_PROJECTS='llvm;clang;lld;clang-tools-extra;mlir;flang' \
+    -DLLVM_ENABLE_RUNTIMES='compiler-rt;libcxx;libcxxabi;libunwind' \
     -DLLVM_TARGETS_TO_BUILD='AMDGPU;NVPTX;X86' \
     -DLLVM_INSTALL_UTILS=ON \
     -DLLVM_LINK_LLVM_DYLIB=OFF \
@@ -53,6 +58,8 @@ cmake \
     -DLIBCXXABI_ENABLE_STATIC=ON \
     -DMLIR_ENABLE_VULKAN_RUNNER=ON \
     -DMLIR_ENABLE_ROCM_RUNNER=ON \
+    -DSANITIZER_AMDGPU=OFF \
+    -DPACKAGE_VENDOR=AMD \
     $ROCM_REL_DIR/$PRGNAM-$LDIR/llvm
 
 cmake --build . $NUMJOBS
