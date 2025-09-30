@@ -21,9 +21,9 @@ TAG=condor
 
 major=25.10
 major_short=25.10
-minor=2194696
+minor=2203192
 ubuntu_ver=24.04
-repo_folder_ver=6.4.3
+repo_folder_ver=6.4.4
 amf_ver=1.4.37
 tmp=/tmp/condor/amdgpu
 src=/tmp/gpu
