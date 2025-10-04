@@ -13,8 +13,7 @@ First you need to activate the environment with
 ```
 
 With these scripts I build ROCm from version 6.1 to 7.0.1. Just change
-version number in rocm-environment.sh file. You could found some precompiled
-binary packages from me version: 7.0.1 on my repository [HERE](https://www.ixip.net/rocm/)
+version number in rocm-environment.sh file. 
 
 1. Few packages will need to installed and all of them is required. Check file:
 
