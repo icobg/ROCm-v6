@@ -19,7 +19,7 @@ version number in rocm-environment.sh file.
 
 cpackage-requirements
 
-and you could download compiled binary or build scripts from repo written above.
+because I shut down my repo. There's nothing special about these packages. You could compile them alone.
 
 2. Create your virtual environment and install the python packages
 
