@@ -23,8 +23,7 @@ BUILD=1
 rm -rf $DEST
 
 pushd .
-
-    -DAMDGPU_TARGETS='gfx900;gfx906:xnack-;gfx908:xnack-;gfx90a;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1200;gfx1201' \
+cmake \
     -DCLANG_ENABLE_AMDCLANG=ON \
     -DCLANG_DEFAULT_LINKER=lld \
     -DCLANG_DEFAULT_RTLIB=compiler-rt \
@@ -36,7 +35,7 @@ pushd .
     -DCMAKE_CXX_STANDARD=17 \
     -DFFI_INCLUDE_DIR='/usr/include' \
     -DFFI_LIBRARY_DIR='/usr/lib64' \
-    -DGPU_TARGETS='gfx900;gfx906:xnack-;gfx908:xnack-;gfx90a;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx1151;gfx1200;gfx1201' \
+    -DGPU_TARGETS='gfx908:xnack-;gfx90a;gfx942;gfx950;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1200;gfx1201' \
     -DLLVM_ENABLE_PROJECTS='llvm;clang;lld;clang-tools-extra;mlir;flang' \
     -DLLVM_ENABLE_RUNTIMES='compiler-rt;libcxx;libcxxabi;libunwind' \
     -DLLVM_TARGETS_TO_BUILD='AMDGPU;NVPTX;X86' \
