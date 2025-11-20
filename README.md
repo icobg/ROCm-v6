@@ -1,6 +1,7 @@
 # AMD ROCm for Slackware
 
 Here are the scripts to build AMD ROCm on Slackware 15 x86_64 current tree.
+This tree is deprecated and left if some one want to try old verions.
 
 >[!NOTE]
 > I'm using wget with option content-disposition=on into /etc/wgetrc config file.
